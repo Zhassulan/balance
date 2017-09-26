@@ -16,6 +16,7 @@ import java.util.List;
 
 public class DatabaseManager {
 	
+	private static volatile DatabaseManager _instance = null;
 	private static SqlSessionFactory sqlSessionFactory;
 	private static ClientMapper clientMapper;
 	private static Reader reader = null;
@@ -32,9 +33,18 @@ public class DatabaseManager {
 		}
 	}
 	
-	public DatabaseManager()	{
+	private DatabaseManager()	{
 		Initialize();
 	}
+	
+	public static synchronized DatabaseManager getInstance() {
+        if (_instance == null)
+        	 synchronized (DatabaseManager.class) {
+                 if (_instance == null)
+                     _instance = new DatabaseManager();
+             }
+        return _instance;
+    }
 	
 	public void Initialize()	{
 		try	(SqlSession session = sqlSessionFactory.openSession()) 	{

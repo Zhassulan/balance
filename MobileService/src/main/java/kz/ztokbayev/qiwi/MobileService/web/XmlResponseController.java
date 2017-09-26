@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/xml")
 public class XmlResponseController {
 	
-	private DatabaseManager dbmanager = new DatabaseManager();
+	//private DatabaseManager dbmanager = new DatabaseManager();
 
 	@RequestMapping(value = "new-agt", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
 	public @ResponseBody Response processXMLRequestNewAgent(@RequestBody Request request)	{
@@ -35,7 +35,7 @@ public class XmlResponseController {
 				return response;
 			}
 			
-			List <Client> clients = dbmanager.GetClientByLogin(request.getLogin());
+			List <Client> clients = DatabaseManager.getInstance().GetClientByLogin(request.getLogin());
 			if (clients.size() > 0)	{
 				response.setResultCode(1);
 				return response;
@@ -45,7 +45,7 @@ public class XmlResponseController {
 			client.setLogin(request.getLogin());			
 			MD5 md5 = new MD5(request.getPassword());
 			client.setPassword(md5.getHash());
-			if (dbmanager.addClient(client))
+			if (DatabaseManager.getInstance().addClient(client))
 				response.setResultCode(0);
 			else
 				//Другая ошибка
@@ -56,6 +56,7 @@ public class XmlResponseController {
 	
 	@RequestMapping(value = "agt-bal", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
 	public @ResponseBody ResponseWithBalance processXMLRequestGetBalance(@RequestBody Request request)	{
+		App.logger.info("agt-bal started------------------------------");
 		ResponseWithBalance response = new ResponseWithBalance();
 		
 		if (request.getRequestType().equalsIgnoreCase("agt-bal"))	{
@@ -73,11 +74,12 @@ public class XmlResponseController {
 			}
 			
 			MD5 md5 = new MD5(request.getPassword());
-			List <Client> clients = dbmanager.GetClientByLoginAndPassword(request.getLogin(), md5.getHash());
+			List <Client> clients = DatabaseManager.getInstance().GetClientByLoginAndPassword(request.getLogin(), md5.getHash());
 			if (clients.size() == 1)	{
 				response.setResultCode(0);
 				Client client = clients.get(0);
 				response.setBalance(client.getBalance());
+				App.logger.info("agt-bal finished------------------------------");
 				return response;
 			}
 			else //не верный логин или пароль
