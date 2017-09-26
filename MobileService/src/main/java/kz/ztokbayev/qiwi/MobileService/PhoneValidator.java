@@ -6,10 +6,12 @@ public class PhoneValidator {
 	
 	private int resultCode;
 	private String phone;
+	private int length;
 
-	public PhoneValidator(String phone)	{
+	public PhoneValidator(String phone, int length)	{
 		super();
 		this.phone = phone;
+		this.length = length;
 		Validate();
 	}
 	
@@ -19,7 +21,7 @@ public class PhoneValidator {
 	
 	private void Validate()	{
 		resultCode = 0;
-		if (phone.length() < 10 || phone.length() > 10)	{
+		if (phone.length() < length || phone.length() > length)	{
 			resultCode = 2;
 		}
 		if (!Pattern.matches("[a-zA-Z]+", phone))	{
