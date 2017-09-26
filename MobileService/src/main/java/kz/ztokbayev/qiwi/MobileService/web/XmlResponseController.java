@@ -2,6 +2,7 @@ package kz.ztokbayev.qiwi.MobileService.web;
 
 import kz.ztokbayev.qiwi.MobileService.model.*;
 import kz.ztokbayev.qiwi.MobileService.db.*;
+import kz.ztokbayev.qiwi.MobileService.App;
 import kz.ztokbayev.qiwi.MobileService.MD5;
 import kz.ztokbayev.qiwi.MobileService.PasswordValidator;
 import kz.ztokbayev.qiwi.MobileService.PhoneValidator;
@@ -18,7 +19,7 @@ public class XmlResponseController {
 	private DatabaseManager dbmanager = new DatabaseManager();
 
 	@RequestMapping(value = "new-agt", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
-	public @ResponseBody Response processXMLJsonRequest(@RequestBody Request request)	{
+	public @ResponseBody Response processXMLRequestNewAgent(@RequestBody Request request)	{
 		Response response = new Response();
 		if (request.getRequestType().equalsIgnoreCase("new-agt"))	{
 			
@@ -47,7 +48,40 @@ public class XmlResponseController {
 			if (dbmanager.addClient(client))
 				response.setResultCode(0);
 			else
+				//Другая ошибка
 				response.setResultCode(5);
+		}
+	    return response;
+	}
+	
+	@RequestMapping(value = "agt-bal", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
+	public @ResponseBody ResponseWithBalance processXMLRequestGetBalance(@RequestBody Request request)	{
+		ResponseWithBalance response = new ResponseWithBalance();
+		
+		if (request.getRequestType().equalsIgnoreCase("agt-bal"))	{
+			
+			PhoneValidator phoneValidator = new PhoneValidator(request.getLogin(), 10);
+			PasswordValidator passwordValidator = new PasswordValidator(request.getPassword());
+			
+			if (phoneValidator.getResultCode() == 2)	{
+				response.setResultCode(2);
+				return response;
+			}
+			if (passwordValidator.getResultCode() == 3)	{
+				response.setResultCode(3);
+				return response;
+			}
+			
+			MD5 md5 = new MD5(request.getPassword());
+			List <Client> clients = dbmanager.GetClientByLoginAndPassword(request.getLogin(), md5.getHash());
+			if (clients.size() == 1)	{
+				response.setResultCode(0);
+				Client client = clients.get(0);
+				response.setBalance(client.getBalance());
+				return response;
+			}
+			else //не верный логин или пароль
+				response.setResultCode(1);
 		}
 	    return response;
 	}

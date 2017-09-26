@@ -21,10 +21,8 @@ public class PhoneValidator {
 	
 	private void Validate()	{
 		resultCode = 0;
-		if (phone.length() < length || phone.length() > length)	{
-			resultCode = 2;
-		}
-		if (!Pattern.matches("[a-zA-Z]+", phone))	{
+		//[0-9] только цифры, длина 10
+		if (!Pattern.matches("^[0-9]{10}$", phone))	{
 			resultCode = 2;
 		}
 	}

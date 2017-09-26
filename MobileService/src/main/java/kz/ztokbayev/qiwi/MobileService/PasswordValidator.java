@@ -1,5 +1,7 @@
 package kz.ztokbayev.qiwi.MobileService;
 
+import java.util.regex.Pattern;
+
 public class PasswordValidator {
 	
 	private String password;
@@ -8,6 +10,7 @@ public class PasswordValidator {
 	public PasswordValidator(String password) {
 		super();
 		this.password = password;
+		resultCode = 0;
 		Validate();
 	}
 
@@ -24,11 +27,14 @@ public class PasswordValidator {
 	}
 
 	private void Validate()	{
-        String regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,8}$";
-        if (password.matches(regexp))
-        	resultCode = 0;
-        else 
-        	resultCode = 3;
+		/** ^ - начало строки, (?=.*[0-9]) - как минимум одна цифра, 
+		 * (?=.*[a-z]) - как минимум одна маленькая буква
+		 * (?=.*[A-Z]) - как минимум одна большая буква
+		 * {8,} - длина миниум 8 символов
+		 * $ - конец строки
+		 */
+        String regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+        if (!Pattern.matches(regexp, password))	resultCode = 3;
 	}
 	
 }

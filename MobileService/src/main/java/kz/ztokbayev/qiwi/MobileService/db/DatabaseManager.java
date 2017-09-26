@@ -70,6 +70,20 @@ public class DatabaseManager {
 		return clients;
 	}
 	
+	public List<Client> GetClientByLoginAndPassword(String login, String password)	{
+		List <Client> clients = null;
+		try	(SqlSession session = sqlSessionFactory.openSession())	{
+			clientMapper = session.getMapper(ClientMapper.class);
+			clients = clientMapper.getByLoginAndPassword(login, password);
+		}
+		catch	(Exception ex)
+		{
+			App.logger.info("Error message in GetClientByLoginAndPassword: " + ex.getMessage());
+			App.logger.error("Stack trace: ", ex);
+		}	
+		return clients;
+	}
+	
 	public boolean addClient(Client client)	{
 		try(SqlSession session = sqlSessionFactory.openSession()) {
 			clientMapper = session.getMapper(ClientMapper.class);
