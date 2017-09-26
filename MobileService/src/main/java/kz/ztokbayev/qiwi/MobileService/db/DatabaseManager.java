@@ -5,15 +5,12 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.mybatis.spring.SqlSessionFactoryBean;
-
 import kz.ztokbayev.qiwi.MobileService.App;
 import kz.ztokbayev.qiwi.MobileService.model.Client;
-import kz.ztokbayev.qiwi.MobileService.db.*;
-
 import java.io.Reader;
 import java.util.List;
 
+//Singleton pattern
 public class DatabaseManager {
 	
 	private static volatile DatabaseManager _instance = null;
