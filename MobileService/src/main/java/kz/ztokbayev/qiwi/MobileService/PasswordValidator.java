@@ -2,6 +2,15 @@ package kz.ztokbayev.qiwi.MobileService;
 
 import java.util.regex.Pattern;
 
+/**
+ * Класс для проверки получения хеша из объекта String, паттерн синглтон с "ленивой" 
+ * инициализацией (по запросу) 
+ * @author Zhassulan Tokbaev
+ * @version 1.0
+ * @see PasswordValidator
+ * 
+*/
+
 public class PasswordValidator {
 	
 	private String password;

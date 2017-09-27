@@ -2,13 +2,29 @@ package kz.ztokbayev.qiwi.MobileService;
 
 import java.security.MessageDigest;
 
+/**
+ * Класс для получения хеша из объекта String, паттерн синглтон с "ленивой" 
+ * инициализацией (по запросу) 
+ * @author Zhassulan Tokbaev
+ * @version 1.0
+ * @see MD5
+ * 
+*/
+
 public class MD5 {
 	
+	/** ссылка на будущий экземпляр класса **/
 	private static volatile MD5 _instance = null;
 	
+	/** конструктор
+	 * @see MD5()
+	 */
 	private MD5()	{
 	}
 	
+	/** инициализация класса, ссылки и получение ссылки
+	 * @see getInstance()
+	 */
 	public static synchronized MD5 getInstance() {
         if (_instance == null)
         	 synchronized (MD5.class) {
@@ -18,6 +34,10 @@ public class MD5 {
         return _instance;
     }
 	
+	/** метод распечатки двумерного массива в виде матрицы
+	 * @param String password пароль
+	 * @see getHash
+	 */
 	public String getHash(String password)	{
 		StringBuffer hash = null;
 		try {
