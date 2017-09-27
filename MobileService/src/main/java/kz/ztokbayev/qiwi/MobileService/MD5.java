@@ -1,9 +1,6 @@
 package kz.ztokbayev.qiwi.MobileService;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import kz.ztokbayev.qiwi.MobileService.db.DatabaseManager;
 
 public class MD5 {
 	
