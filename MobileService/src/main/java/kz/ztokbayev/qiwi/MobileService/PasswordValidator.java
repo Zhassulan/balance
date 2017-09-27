@@ -30,10 +30,10 @@ public class PasswordValidator {
 		/** ^ - начало строки, (?=.*[0-9]) - как минимум одна цифра, 
 		 * (?=.*[a-z]) - как минимум одна маленькая буква
 		 * (?=.*[A-Z]) - как минимум одна большая буква
-		 * {8,} - длина миниум 8 символов
+		 * {8,} - длина миниум 8 символов - берём из конфига
 		 * $ - конец строки
 		 */
-        String regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+        String regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{" + PropsManager.getInstance().getProperty("password_length") + ",}$";
         if (!Pattern.matches(regexp, password))	resultCode = 3;
 	}
 	

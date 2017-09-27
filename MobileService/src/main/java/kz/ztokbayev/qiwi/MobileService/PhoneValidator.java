@@ -6,12 +6,10 @@ public class PhoneValidator {
 	
 	private int resultCode;
 	private String phone;
-	private int length;
-
-	public PhoneValidator(String phone, int length)	{
+	
+	public PhoneValidator(String phone)	{
 		super();
 		this.phone = phone;
-		this.length = length;
 		Validate();
 	}
 	
@@ -21,8 +19,8 @@ public class PhoneValidator {
 	
 	private void Validate()	{
 		resultCode = 0;
-		//[0-9] только цифры, длина 10
-		if (!Pattern.matches("^[0-9]{10}$", phone))	{
+		//[0-9] только цифры, длина 10 (берём из конфига)
+		if (!Pattern.matches("^[0-9]{" + PropsManager.getInstance().getProperty("mobile_length") + "}$", phone))	{
 			resultCode = 2;
 		}
 	}

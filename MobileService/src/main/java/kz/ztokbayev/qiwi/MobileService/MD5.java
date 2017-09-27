@@ -3,20 +3,28 @@ package kz.ztokbayev.qiwi.MobileService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import kz.ztokbayev.qiwi.MobileService.db.DatabaseManager;
+
 public class MD5 {
 	
-	private String password;
-	private StringBuffer hash; 
+	private static volatile MD5 _instance = null;
 	
-	public MD5(String password)	{
-		super();
-		this.password = password;
-		setHash();
+	private MD5()	{
 	}
 	
-	private void setHash()	{
-		MessageDigest md;
+	public static synchronized MD5 getInstance() {
+        if (_instance == null)
+        	 synchronized (MD5.class) {
+                 if (_instance == null)
+                     _instance = new MD5();
+             }
+        return _instance;
+    }
+	
+	public String getHash(String password)	{
+		StringBuffer hash = null;
 		try {
+			MessageDigest md;
 			md = MessageDigest.getInstance("MD5");
 			md.update(password.getBytes());
 			byte[] digest = md.digest();
@@ -26,13 +34,9 @@ public class MD5 {
 			}	
 		}
 		catch (Exception ex) {
-			App.logger.info("Error message in setHash: " + ex.getMessage());
+			App.logger.info("Error message in getHash: " + ex.getMessage());
 			App.logger.error("Stack trace: ", ex);
 		}
-		
-	}
-	
-	public String getHash()	{
 		return hash.toString();
 	}
 	

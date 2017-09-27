@@ -6,9 +6,12 @@ import kz.ztokbayev.qiwi.MobileService.App;
 import kz.ztokbayev.qiwi.MobileService.MD5;
 import kz.ztokbayev.qiwi.MobileService.PasswordValidator;
 import kz.ztokbayev.qiwi.MobileService.PhoneValidator;
+import kz.ztokbayev.qiwi.MobileService.PropsManager;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,14 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/xml")
 public class XmlResponseController {
 	
-	//private DatabaseManager dbmanager = new DatabaseManager();
-
 	@RequestMapping(value = "new-agt", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
 	public @ResponseBody Response processXMLRequestNewAgent(@RequestBody Request request)	{
 		Response response = new Response();
 		if (request.getRequestType().equalsIgnoreCase("new-agt"))	{
 			
-			PhoneValidator phoneValidator = new PhoneValidator(request.getLogin(), 10);
+			PhoneValidator phoneValidator = new PhoneValidator(request.getLogin());
 			PasswordValidator passwordValidator = new PasswordValidator(request.getPassword());
 			
 			if (phoneValidator.getResultCode() == 2)	{
@@ -43,8 +44,7 @@ public class XmlResponseController {
 			
 			Client client = new Client();
 			client.setLogin(request.getLogin());			
-			MD5 md5 = new MD5(request.getPassword());
-			client.setPassword(md5.getHash());
+			client.setPassword(MD5.getInstance().getHash(request.getPassword()));
 			if (DatabaseManager.getInstance().addClient(client))
 				response.setResultCode(0);
 			else
@@ -56,12 +56,11 @@ public class XmlResponseController {
 	
 	@RequestMapping(value = "agt-bal", method = RequestMethod.POST, produces={"application/xml"}, consumes={"application/xml"})	
 	public @ResponseBody ResponseWithBalance processXMLRequestGetBalance(@RequestBody Request request)	{
-		App.logger.info("agt-bal started------------------------------");
 		ResponseWithBalance response = new ResponseWithBalance();
 		
 		if (request.getRequestType().equalsIgnoreCase("agt-bal"))	{
 			
-			PhoneValidator phoneValidator = new PhoneValidator(request.getLogin(), 10);
+			PhoneValidator phoneValidator = new PhoneValidator(request.getLogin());
 			PasswordValidator passwordValidator = new PasswordValidator(request.getPassword());
 			
 			if (phoneValidator.getResultCode() == 2)	{
@@ -73,13 +72,11 @@ public class XmlResponseController {
 				return response;
 			}
 			
-			MD5 md5 = new MD5(request.getPassword());
-			List <Client> clients = DatabaseManager.getInstance().GetClientByLoginAndPassword(request.getLogin(), md5.getHash());
+			List <Client> clients = DatabaseManager.getInstance().GetClientByLoginAndPassword(request.getLogin(), MD5.getInstance().getHash(request.getPassword()));
 			if (clients.size() == 1)	{
 				response.setResultCode(0);
 				Client client = clients.get(0);
 				response.setBalance(client.getBalance());
-				App.logger.info("agt-bal finished------------------------------");
 				return response;
 			}
 			else //не верный логин или пароль
