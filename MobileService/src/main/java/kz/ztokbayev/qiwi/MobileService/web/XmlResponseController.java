@@ -2,16 +2,10 @@ package kz.ztokbayev.qiwi.MobileService.web;
 
 import kz.ztokbayev.qiwi.MobileService.model.*;
 import kz.ztokbayev.qiwi.MobileService.db.*;
-import kz.ztokbayev.qiwi.MobileService.App;
 import kz.ztokbayev.qiwi.MobileService.MD5;
 import kz.ztokbayev.qiwi.MobileService.PasswordValidator;
 import kz.ztokbayev.qiwi.MobileService.PhoneValidator;
-import kz.ztokbayev.qiwi.MobileService.PropsManager;
-
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 
