@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
 <configuration> 
-    <properties resource="app.properties"> 
+    <properties resource="application.properties"> 
     </properties> 
     <settings>
         <setting name="logImpl" value="LOG4J"/> 
@@ -10,10 +10,10 @@
         <environment id="development"> 
             <transactionManager type="JDBC"/> 
             <dataSource type="POOLED"> 
-                <property name="driver" value="${mysql.driver}"/> 
+                <property name="driver" value="${spring.datasource.driverClassName}"/> 
                 <property name="url" value="${mysql.url}"/> 
-                <property name="username" value="${mysql.username}"/> 
-                <property name="password" value="${mysql.password}"/> 
+                <property name="username" value="${spring.datasource.username}"/> 
+                <property name="password" value="${spring.datasource.password}"/> 
             </dataSource> 
         </environment> 
     </environments> 
