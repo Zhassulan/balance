@@ -20,7 +20,7 @@ public class DatabaseManager {
 	
 	static {
 		try {
-			reader = Resources.getResourceAsReader("xml/mybatis-config.xml");
+			reader = Resources.getResourceAsReader("mybatis-config.xml");
 	        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 		}
 		catch	(Exception ex)
@@ -47,14 +47,6 @@ public class DatabaseManager {
 		try	(SqlSession session = sqlSessionFactory.openSession()) 	{
 			//adding annotated mappers
 			session.getConfiguration().addMapper(ClientMapper.class);
-			reader = Resources.getResourceAsReader("sql/schema.sql");
-			ScriptRunner runner = new ScriptRunner(session.getConnection());
-			runner.setLogWriter(null);
-			runner.setErrorLogWriter(null);
-			runner.runScript(reader);
-			session.commit();
-			reader.close();
-			App.logger.info("Database is initialized.");
 			}
 			catch	(Exception ex)
 			{
