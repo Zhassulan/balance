@@ -4,25 +4,29 @@ import java.util.regex.Pattern;
 
 public class PhoneValidator {
 	
-	private int resultCode;
-	private String phone;
+	/** ссылка на будущий экземпляр класса **/
+	private static volatile PhoneValidator _instance = null;
 	
-	public PhoneValidator(String phone)	{
-		super();
-		this.phone = phone;
-		Validate();
+	private PhoneValidator()	{
 	}
 	
-	public int getResultCode() {
-		return resultCode;
-	}
+	/** инициализация класса, ссылки и получение ссылки
+	 * @see getInstance()
+	 */
+	public static synchronized PhoneValidator getInstance() {
+        if (_instance == null)
+        	 synchronized (PhoneValidator.class) {
+                 if (_instance == null)
+                     _instance = new PhoneValidator();
+             }
+        return _instance;
+    }
 	
-	private void Validate()	{
-		resultCode = 0;
+	public int Validate(String phone)	{
 		//[0-9] только цифры, длина 10 (берём из конфига)
-		if (!Pattern.matches("^[0-9]{" + PropsManager.getInstance().getProperty("mobile_length") + "}$", phone))	{
-			resultCode = 2;
-		}
+		if (!Pattern.matches("^[0-9]{" + PropsManager.getInstance().getProperty("mobile_length") + "}$", phone))
+			return 2;
+		else return 0;
 	}
-	
+
 }
