@@ -13,14 +13,14 @@ Qiwi Kazakhstan java task
  <login>1234567890</login> 
  <password>password</password> 
 </request>
-```xml
+```
 Ответ:
 ```xml 
 <?xml version="1.0" encoding="utf-8"?>
 <response>
  <result-code>0</result-code>
 </response>
-```xml
+```
 Где код ошибки:
  0  – все хорошо
  1  – такой агент уже  зарегистрирован
@@ -37,7 +37,7 @@ Qiwi Kazakhstan java task
  <login>1234567890</login> 
  <password>password</password> 
 </request>
-```xml
+```
 Ответ:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -45,7 +45,7 @@ Qiwi Kazakhstan java task
   <result-code>0</result-code>
   <bal>100.00</bal>
 </response>
-```xml
+```
 Коды ошибок дописать на свое усмотрение.
 
 
