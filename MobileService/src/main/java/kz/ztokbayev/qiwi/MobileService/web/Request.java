@@ -2,8 +2,6 @@ package kz.ztokbayev.qiwi.MobileService.web;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 
-import kz.ztokbayev.qiwi.MobileService.model.Client;
-
 /**
  * Класс определяющий XML запрос идущий на контроллер Spring MVC
  * @author Zhassulan Tokbaev

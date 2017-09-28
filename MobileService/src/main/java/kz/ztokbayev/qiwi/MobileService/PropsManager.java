@@ -24,11 +24,9 @@ public class PropsManager {
 	 * **/
 	private PropsManager()	{
 		/** получение пути к файлу **/
-		String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		String appConfigPath = rootPath + "application.properties";
 		appProps = new Properties();
 		try {
-			appProps.load(new FileInputStream(appConfigPath));
+			appProps.load(PropsManager.class.getResourceAsStream("/application.properties"));
 			}
 		catch (FileNotFoundException ex) {
 			App.logger.info("Error message in PropsManager constructor " + ex.getMessage());
