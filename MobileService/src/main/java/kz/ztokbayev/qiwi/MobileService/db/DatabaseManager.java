@@ -9,7 +9,13 @@ import kz.ztokbayev.qiwi.MobileService.model.Client;
 import java.io.Reader;
 import java.util.List;
 
-//Singleton pattern
+/**
+ * Класс для управления запросами в базу данных
+ * @author Zhassulan Tokbaev
+ * @version 1.0
+ * @see DatabaseManager
+ **/
+
 public class DatabaseManager {
 	
 	private static volatile DatabaseManager _instance = null;

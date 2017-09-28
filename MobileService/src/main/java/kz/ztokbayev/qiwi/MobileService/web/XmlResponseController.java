@@ -7,6 +7,15 @@ import kz.ztokbayev.qiwi.MobileService.db.*;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Класс контроллер-сервлет обрабатывающий XML запросы, отправляются в формате: 
+ * 1) http://localhost:8080/xml/new-agt - добавление клиента
+ * 2) http://localhost:8080/xml/agt-bal - получить баланс клиента
+ * localhost - сервер
+ * @author Zhassulan Tokbaev
+ * @version 1.0
+ * @see XmlResponseController
+ **/
 
 @RestController
 @RequestMapping(value = "/xml")

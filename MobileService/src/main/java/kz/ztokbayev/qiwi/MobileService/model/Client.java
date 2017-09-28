@@ -1,5 +1,12 @@
 package kz.ztokbayev.qiwi.MobileService.model;
 
+/**
+ * Класс модель POJO Клиента (Агента)
+ * @author Zhassulan Tokbaev
+ * @version 1.0
+ * @see Client
+ **/
+
 public class Client {
 
 	private Integer id;
