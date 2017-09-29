@@ -67,12 +67,12 @@
 
 Действия для запуска:
 - Создать папку для проекта (далее ПП) 
-- Запустить командный shell (в Windows cmd)
+- Запустить консоль ОС
 - Перейти в ПП
 - Клонировать проект с публичного GitHub сервера выполнив команду git clone https://github.com/Zhassulan/balance.git 
 - для инициализаии БД надо прописать пользователя с правами на создание базы данных на сервере СУБД в файле ..ПП\MobileService\src\main\resources\application.properties параметр spring.datasource.username и spring.datasource.password. Будет создана база mobile или если она существует то добавятся таблицы. Схему можно посмотреть в файле ..ПП\MobileService\src\main\resources\schema-mysql.sql.
 - если сервер СУБД MySQL не локальный то указать сервер в параметрах spring.datasource.url и mysql.url, заменив слово localhost на ваш сервер
-- запустить cmd и перейти в ПП на уровень pom.xml файла
+- в консоли войти в ..\ПП\balance\MobileService (на уровень pom.xml файла)
 - скомпилировать приложение выполнив команду mvn compile
 - скачать\собрать зависимости для приложения выполнив команду mvn package
 - запустить приложение командой mvn spring-boot:run
