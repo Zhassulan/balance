@@ -1,6 +1,5 @@
 package kz.ztokbayev.qiwi.MobileService;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
@@ -23,7 +22,6 @@ public class PropsManager {
 	 * @see PropsManager()
 	 * **/
 	private PropsManager()	{
-		/** получение пути к файлу **/
 		appProps = new Properties();
 		try {
 			appProps.load(PropsManager.class.getResourceAsStream("/application.properties"));
